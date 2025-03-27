@@ -28,7 +28,7 @@ function Billing() {
       ...prev,
       credits: Number(user?.credits) + Number(credits),
     })); // Update user credits in context
-    toast("Credits added successfully");
+    toast.success("Credits added successfully");
   };
 
   return (
@@ -78,7 +78,7 @@ function Billing() {
                   onApprove={() => onPaymentSuccess(plan?.cost, plan?.credits)}
                   onCancel={() => {
                     console.log("Payment cancelled");
-                    toast.error("Payment cancelled");
+                    alert("Payment cancelled");
                   }}
                   createOrder={(data, actions) => {
                     return actions?.order?.create({

@@ -7,6 +7,7 @@ import AppHeader from "./_components/AppHeader";
 import { useAuthContext } from "@/app/provider";
 import { useRouter } from "next/navigation";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import "react-toastify/dist/ReactToastify.css";
 
 function DashboardProvider({ children }) {
   const { user } = useAuthContext();

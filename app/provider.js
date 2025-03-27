@@ -7,6 +7,7 @@ import { auth } from "@/configs/firebaseConfig";
 import { ConvexProvider, ConvexReactClient, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import "react-toastify/dist/ReactToastify.css";
 
 // Initialize Convex Client using environment variable ✅
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL);
@@ -37,7 +38,7 @@ export const Provider = ({ children }) => {
 
   return (
     <ConvexProvider client={convex}>
-      <AuthContext.Provider value={{ user,setUser }}>
+      <AuthContext.Provider value={{ user, setUser }}>
         <PayPalScriptProvider
           options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID }}
         >
