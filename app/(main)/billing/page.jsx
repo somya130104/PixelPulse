@@ -35,7 +35,7 @@ function Billing() {
     <div className="max-w-3xl mx-auto p-6 text-gray-200 border rounded-xl">
       <h2 className="font-semibold text-3xl mb-6">Credits</h2>
       <div
-        className="p-5 border  rounded-lg flex justify-between items-center bg-black shadow-sm"
+        className="p-5 border rounded-lg flex justify-between items-center shadow-sm"
         style={{ backgroundColor: "#151515" }}
       >
         <div>
@@ -58,7 +58,7 @@ function Billing() {
           {creditsPlans.map((plan, index) => (
             <div
               key={index}
-              className="p-5 border rounded-lg  shadow-sm flex justify-between items-center bg-#151515"
+              className="p-5 border rounded-lg shadow-sm flex justify-between items-center"
               style={{ backgroundColor: "#151515" }}
             >
               <div className="flex items-center gap-3">
@@ -67,7 +67,6 @@ function Billing() {
               </div>
               <div className="flex items-center gap-3">
                 <h2 className="font-medium text-lg">${plan.cost}</h2>
-                {/* Note: PayPalButtons styling might need additional adjustments depending on PayPal's API */}
                 <PayPalButtons
                   className="rounded-xl"
                   style={{

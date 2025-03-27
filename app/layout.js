@@ -2,6 +2,7 @@ import { Geist, Geist_Mono, Outfit } from "next/font/google";
 import "./globals.css";
 import Provider from "./provider.js";
 import ConvexClientProvider from "./ConvexClientProvider";
+import "react-toastify/dist/ReactToastify.css";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
