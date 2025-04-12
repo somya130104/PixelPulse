@@ -30,6 +30,7 @@ function CreateNewVideo() {
   const GenerateVideo = async () => {
     if (user?.credits <= 0) {
       toast.error("Please add more credits.");
+      alert("Please add more credits.");
       return;
     }
     if (
@@ -66,7 +67,8 @@ function CreateNewVideo() {
         setLoading(false);
       }
     } else {
-      console.log("Please fill all the fields");
+      toast.error("Please fill all the fields");
+      alert("Please fill all the fields");
       console.log(formData);
       return;
     }

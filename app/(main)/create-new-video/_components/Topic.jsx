@@ -33,6 +33,7 @@ function Topic({ onHandleInputChange }) {
   const GenerateScriptPage = async () => {
     if (user?.credits <= 0) {
       toast.error("Please add more credits.");
+      alert("Please add more credits.");
       return;
     }
     setLoading(true);
