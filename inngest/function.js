@@ -11,7 +11,7 @@ const BASE_URL = "https://aigurulab.tech";
 const ImagePrompt = `Generate Image prompt of {style} style with all details for each scene for a 30 seconds video: script : {script}  
 - Just give specific image prompts depending on the storyline.  
 - Do not give camera angle image prompts.  
-- Follow the following schema and return JSON data (Max 4-5 Images):  
+- Follow the following schema and return JSON data (Max 7 Images):  
 [
   {
     "imagePrompt": "",
