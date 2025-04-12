@@ -28,6 +28,7 @@ function Topic({ onHandleInputChange }) {
   const [scripts, setScripts] = useState();
   const [loading, setLoading] = useState(false);
   const [selectedScriptIndex, setSelectedScriptIndex] = useState();
+  const [currentGeneratedTopic, setCurrentGeneratedTopic] = useState("");
   const { user } = useAuthContext();
 
   const GenerateScriptPage = async () => {
@@ -44,10 +45,23 @@ function Topic({ onHandleInputChange }) {
       });
       console.log(result.data); // Handle the response as needed
       setScripts(result.data?.scripts);
+      setCurrentGeneratedTopic(selectedTopic);
       setLoading(false);
     } catch (error) {
       console.error("Error generating script:", error);
       setLoading(false);
+    }
+  };
+
+  const handleTopicChange = (topic) => {
+    setSelectedTopic(topic);
+    onHandleInputChange("topic", topic);
+
+    // Reset scripts if the topic changes from the one that was used to generate them
+    if (topic !== currentGeneratedTopic) {
+      setScripts(null);
+      setSelectedScriptIndex(null);
+      onHandleInputChange("script", "");
     }
   };
 
@@ -78,8 +92,7 @@ function Topic({ onHandleInputChange }) {
                     selectedTopic === suggestion ? "bg-blue-500 text-white" : ""
                   }`}
                   onClick={() => {
-                    setSelectedTopic(suggestion);
-                    onHandleInputChange("topic", suggestion);
+                    handleTopicChange(suggestion);
                   }}
                 >
                   {suggestion}
@@ -93,15 +106,14 @@ function Topic({ onHandleInputChange }) {
               <Textarea
                 value={selectedTopic}
                 onChange={(e) => {
-                  setSelectedTopic(e.target.value);
-                  onHandleInputChange("topic", e.target.value);
+                  handleTopicChange(e.target.value);
                 }}
               />
             </div>
           </TabsContent>
         </Tabs>
 
-        {scripts?.length > 0 && (
+        {scripts?.length > 0 && currentGeneratedTopic === selectedTopic && (
           <div className="mt-2">
             <h2>Select the Script</h2>
             <div className="grid grid-cols-2 gap-5 mt-1.5 cursor-pointer">
@@ -123,12 +135,12 @@ function Topic({ onHandleInputChange }) {
           </div>
         )}
       </div>
-      {!scripts && (
+      {(!scripts || currentGeneratedTopic !== selectedTopic) && (
         <Button
           className="mt-3"
           size="sm"
           onClick={GenerateScriptPage}
-          disabled={loading}
+          disabled={loading || !selectedTopic}
         >
           {loading ? <LoaderIcon className="animate-spin" /> : <SparkleIcon />}{" "}
           Generate Script
