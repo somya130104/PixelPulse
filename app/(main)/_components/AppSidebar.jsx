@@ -35,11 +35,6 @@ const MenuItems = [
     icon: LucideFileVideo,
   },
   {
-    title: "Explore",
-    url: "/explore",
-    icon: Search,
-  },
-  {
     title: "Billing",
     url: "/billing",
     icon: WalletCards,

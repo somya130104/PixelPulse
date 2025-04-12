@@ -2,12 +2,13 @@
 
 import React, { useEffect, createContext, useContext, useState } from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
 import { ConvexProvider, ConvexReactClient, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
 // Initialize Convex Client using environment variable ✅
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL);
@@ -17,6 +18,7 @@ const AuthContext = createContext();
 
 export const Provider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const router = useRouter();
   const createUser = useMutation(api.users.createNewUser);
 
   useEffect(() => {
@@ -36,9 +38,15 @@ export const Provider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+  const logout = async () => {
+    await signOut(auth);
+    setUser(null);
+    router.push("/"); // Navigate to the home page after logout
+  };
+
   return (
     <ConvexProvider client={convex}>
-      <AuthContext.Provider value={{ user, setUser }}>
+      <AuthContext.Provider value={{ user, setUser, logout }}>
         <PayPalScriptProvider
           options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID }}
         >
