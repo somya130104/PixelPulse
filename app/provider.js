@@ -29,13 +29,13 @@ export const Provider = ({ children }) => {
           name: user?.displayName,
           email: user?.email,
           pictureURL: user?.photoURL,
-        });
+        });//If a user is authenticated (not null).Calls the createUser Convex mutation with the user's details.The optional chaining (?.) safely accesses properties even if they're undefined
 
         console.log("User created at Provider.js central one:", result);
         setUser(result);
       }
-    });
-    return () => unsubscribe();
+    });//Sets up a listener for Firebase authentication state changes.The callback runs whenever the user logs in or out.
+    return () => unsubscribe();//Returns an unsubscribe function to clean up the listener
   }, []);
 
   const logout = async () => {
@@ -45,7 +45,7 @@ export const Provider = ({ children }) => {
   };
 
   return (
-    <ConvexProvider client={convex}>
+    <ConvexProvider client={convex}>{/* Wrap the children with ConvexProvider.Makes Convex database client available to all child components */}
       <AuthContext.Provider value={{ user, setUser, logout }}>
         <PayPalScriptProvider
           options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID }}
@@ -70,6 +70,6 @@ export const useAuthContext = () => {
     throw new Error("useAuthContext must be used within a Provider");
   }
   return context;
-};
+};//This hook allows components to easily access the authentication context values like user, setUser, and logout.
 
 export default Provider;

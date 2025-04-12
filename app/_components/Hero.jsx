@@ -1,8 +1,13 @@
+"use client";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Authentication from "./Authentication";
+import { useAuthContext } from "../provider";
+import Image from "next/image";
+import Link from "next/link"; // Added import for Link
 
 function Hero() {
+  const { user } = useAuthContext();
   return (
     <div className="p-10 flex flex-col items-center justify-center mt-24 md:px-20 lg:px-36 xl:px-48">
       <h2 className="font-bold text-6xl text-center">
@@ -14,12 +19,20 @@ function Hero() {
       </p>
 
       <div className="mt-7 flex gap-8">
-        <Button size="lg" variant="myown">
+        <Button size="lg" variant="primary"> {/* Corrected variant */}
           Explore
         </Button>
-        <Authentication>
-          <Button size="lg">Get Started</Button>
-        </Authentication>
+        {!user ? (
+          <Authentication>
+            <Button>Get Started</Button>
+          </Authentication>
+        ) : (
+          <div className="items-center flex gap-5">
+            <Link href={"/dashboard"}>
+              <Button>Dashboard</Button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
